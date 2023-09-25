@@ -1,0 +1,6 @@
+configuration.yaml
+py-env/
+*github-stage*/
+logfile.log
+.DS_Store
+settings.json
