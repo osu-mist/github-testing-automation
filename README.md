@@ -25,7 +25,7 @@ GitHub Automator utilizes Python's logging module to log informational messages 
 - Log Format
 The log messages are formatted to include the timestamp, log level (INFO or ERROR), and the log message. Here is an example of a log message format:
 
-`2023-09-21 12:34:56 [INFO] - Repository MyRepo created successfully.`
+- `2023-09-21 12:34:56 [INFO] - Repository MyRepo created successfully.`
 
 ## Prerequisites
 
@@ -69,8 +69,8 @@ Navigate to the project directory and run the following command:
 python automate.py
 ```
 
-## Viewing Log Files
-After running the tool, you can view the generated info.log and error.log files in the project directory to inspect the informational and error messages.
+## Check Log Files
+After running the tool, you can view the generated `info.log` and `error.log` files in the project directory to inspect the informational and error messages.
 
 ## Contributing
 
