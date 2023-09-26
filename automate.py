@@ -41,6 +41,8 @@ class GitHubAutomator:
 
     def create_and_initialize_repository(self) -> None:
         """Create a new repository and initialize it both remotely and locally."""
+        repo_local = None
+        
         try:
             self.repo = self.github.get_user().get_repo(self.repo_name)
             self.logger.info(f'Repository {self.repo_name} already exists. Using the existing repository.')
@@ -65,16 +67,18 @@ class GitHubAutomator:
             self.logger.info('Local repository initialized successfully.')
         except Exception as e:
             self.logger.error(f'Failed to initialize local repository. Error: {e}')
-
-        try:
-            repo_local.git.add('README.md')
-            repo_local.git.commit('-m', 'first commit')
-            repo_local.git.branch('-M', 'main')
-            repo_local.git.remote('add', 'origin', self.repo.clone_url)
-            repo_local.git.push('-u', 'origin', 'main')
-            self.logger.info('Initial commit pushed to main branch.')
-        except Exception as e:
-            self.logger.error(f'Failed to push initial commit to main branch. Error: {e}')
+            return  # Return early if local repository initialization fails
+        
+        if repo_local:  # Only proceed if repo_local has been initialized
+            try:
+                repo_local.git.add('README.md')
+                repo_local.git.commit('-m', 'first commit')
+                repo_local.git.branch('-M', 'main')
+                repo_local.git.remote('add', 'origin', self.repo.clone_url)
+                repo_local.git.push('-u', 'origin', 'main')
+                self.logger.info('Initial commit pushed to main branch.')
+            except Exception as e:
+                self.logger.error(f'Failed to push initial commit to main branch. Error: {e}')
 
     def commit_and_push(self, branch_name: str, file_name: str, commit_message: str) -> None:
         """
@@ -251,9 +255,10 @@ class GitHubAutomator:
 
 def main() -> None:
     """Main function to execute the GitHub automator."""
-
-    # Load credentials from YAML file
+    automator = None  # Initialize automator to None
+    
     try:
+        # Load credentials from YAML file
         with open('configuration.yaml', 'r') as file:
             config = yaml.safe_load(file)
 
@@ -283,8 +288,10 @@ def main() -> None:
         automator.logger.info('Repository setup and operations completed.')
 
     except Exception as e:
-        automator.logger.error(f'An error occurred: {e}')
-
+        if automator and hasattr(automator, 'logger'):  # Check if automator is initialized and has attribute 'logger'
+            automator.logger.error(f'An error occurred: {e}')
+        else:
+            print(f'An error occurred: {e}')  # Fallback to print if automator is not initialized or does not have 'logger'
 
 if __name__ == '__main__':
     main()
