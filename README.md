@@ -15,6 +15,18 @@ GitHub Automator is a Python-based tool designed to automate various GitHub oper
 - **Create Branches and Make Changes**: Creates specified branches, makes changes, and pushes to remote.
 - **Delete Repositories with 'automation' in their name**: Deletes all repositories of the user with 'automation' in their name.
 
+## Logging
+
+GitHub Automator utilizes Python's logging module to log informational messages and error messages. The logging mechanism is configured to output log messages to two separate files:
+
+- `info.log`: This file contains informational messages about the operations performed by the tool, such as successful creation of repositories, successful push of commits, etc.
+- `error.log`: This file contains error messages that provide information about any errors or exceptions encountered during the execution of the tool.
+
+- Log Format
+The log messages are formatted to include the timestamp, log level (INFO or ERROR), and the log message. Here is an example of a log message format:
+
+`2023-09-21 12:34:56 [INFO] - Repository MyRepo created successfully.`
+
 ## Prerequisites
 
 - Python 3.x (Used: 3.11)
@@ -56,6 +68,9 @@ Navigate to the project directory and run the following command:
 ```python
 python automate.py
 ```
+
+## Viewing Log Files
+After running the tool, you can view the generated info.log and error.log files in the project directory to inspect the informational and error messages.
 
 ## Contributing
 
