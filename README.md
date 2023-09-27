@@ -107,5 +107,5 @@ Contributions to the this project are welcome. If you find any issues or have su
 This project is licensed under the `MIT License`.
 
 ## Acknowledgements
-- PyGithub for providing the GitHub API Python client.
-- GitPython for enabling Python interaction with Git.
+- `PyGithub` for providing the GitHub API Python client.
+- `GitPython` for enabling Python interaction with Git.
