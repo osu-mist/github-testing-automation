@@ -1,4 +1,4 @@
-# GitHub Testing Automation
+# GitHub Testing Automation [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
 
 GitHub Testing Automation is a Python-based tool designed to automate various GitHub operations for easy GitHub Testing, such as creating and initializing repositories, committing and pushing changes, creating branches, creating and merging pull requests, generating conflicts and resolving it, comments on the pull requests, deleting repositories, testing important git commands and more. It is particularly useful for Testing Staging GitHub operations.
 
@@ -29,7 +29,7 @@ The log messages are formatted to include the timestamp, log level (INFO or ERRO
 
 ## Prerequisites
 
-- Python 3.x [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
+- Python 3.x
 - GitHub Account
 - Access Token with the necessary permissions (see section: GitHub Token Permissions)
 - `git` and `github` Python packages
