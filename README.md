@@ -1,6 +1,6 @@
-# GitHub Automator
+# GitHub Testing Automation
 
-GitHub Automator is a Python-based tool designed to automate various GitHub operations for easy GitHub Testing, such as creating and initializing repositories, committing and pushing changes, creating branches, creating and merging pull requests, generating conflicts and resolving it, comments on the pull requests, deleting repositories, testing important git commands and more. It is particularly useful for Testing Staging GitHub operations.
+GitHub Testing Automation is a Python-based tool designed to automate various GitHub operations for easy GitHub Testing, such as creating and initializing repositories, committing and pushing changes, creating branches, creating and merging pull requests, generating conflicts and resolving it, comments on the pull requests, deleting repositories, testing important git commands and more. It is particularly useful for Testing Staging GitHub operations.
 
 ## Features
 
@@ -17,7 +17,7 @@ GitHub Automator is a Python-based tool designed to automate various GitHub oper
 
 ## Logging
 
-GitHub Automator utilizes Python's logging module to log informational messages and error messages. The logging mechanism is configured to output log messages to two separate files:
+GitHub Testing Automation utilizes Python's logging module to log informational messages and error messages. The logging mechanism is configured to output log messages to two separate files:
 
 - `info.log`: This file contains informational messages about the operations performed by the tool, such as successful creation of repositories, successful push of commits, etc.
 - `error.log`: This file contains error messages that provide information about any errors or exceptions encountered during the execution of the tool.
@@ -29,11 +29,37 @@ The log messages are formatted to include the timestamp, log level (INFO or ERRO
 
 ## Prerequisites
 
-- Python 3.x (Used: 3.11)
+- Python 3.x [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
 - GitHub Account
-- Access Token with the necessary permissions
+- Access Token with the necessary permissions (see section: GitHub Token Permissions)
 - `git` and `github` Python packages
 - YAML configuration file with necessary credentials
+
+## GitHub Token Permissions
+
+The Python script to run successfully, you need to generate a GitHub token with the following scopes:
+
+### Required Scopes
+- `repo`: Full control of private repositories.
+  - Allows creating repositories, committing, pushing, and performing other repository-related operations.
+- `user`: User-related permissions.
+  - Allows the script to get user-related information.
+- `delete_repo`: Allows deleting repositories.
+  - Used to delete repositories with 'automated' in their name.
+- `pull_request`: Pull request-related permissions.
+  - Allows creating, merging, and commenting on pull requests.
+
+### Creating a Token
+1. Go to your GitHub settings.
+2. Navigate to "Developer settings".
+3. Go to "Personal access tokens".
+4. Click "Generate new token".
+5. Select the scopes you need for your script.
+6. Click "Generate token".
+
+### Note for Token
+- Be cautious with the token, as it provides access to your GitHub account. Never share it or push it to public repositories.
+- Always follow the principle of least privilege, granting only the permissions that are absolutely necessary.
 
 ## Setup
 
@@ -48,7 +74,7 @@ pip install -r requirements.txt
 
 ## Configuration
 
-The `configuration.yaml` file contains important parameters for the GitHub Automator. It should have the following structure:
+The `configuration.yaml` file contains important parameters for the GitHub Testing Automation. It should have the following structure:
 
 ```yaml
 credentials:
