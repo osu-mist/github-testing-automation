@@ -1,0 +1,6 @@
+credentials:
+  access_token: your_github_access_token
+  base_url: https://github-example.com/api/v3
+  username: your_github_user_name
+  repo_name: your_github_new_repository_name
+  repo_dir: /path/to/clone/locally/your_github_new_repository_name
