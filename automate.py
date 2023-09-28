@@ -49,7 +49,6 @@ class GitHubAutomator:
         """Create a new repository and initialize it both remotely
         and locally.
         """
-        repo_local = None
         user = self.github.get_user()
 
         repo_exists = any(
@@ -94,7 +93,7 @@ class GitHubAutomator:
         try:
             os.chdir(self.repo_dir)
             os.system(f'echo "# {self.repo_name}" >> README.md')
-            repo_local = git.Repo.init(self.repo_dir)
+            git.Repo.init(self.repo_dir)
             self.logger.info('Local repository initialized successfully.')
         except Exception as e:
             self.logger.error(
@@ -103,12 +102,9 @@ class GitHubAutomator:
             return  # Return early if local repository initialization fails
 
         try:
-            repo_local.git.add('README.md')
-            repo_local.git.commit('-m', 'first commit')
-            repo_local.git.branch('-M', 'main')
-            repo_local.git.remote('add', 'origin', self.repo.clone_url)
-            repo_local.git.push('-u', 'origin', 'main')
-            self.logger.info('Initial commit pushed to main branch.')
+            self.commit_and_push(
+                'main', 'README.md', 'first commit', is_initial_commit=True
+            )
         except Exception as e:
             self.logger.error(
                 f'Failed to push initial commit to main branch. Error: {e}'
@@ -118,7 +114,8 @@ class GitHubAutomator:
         self,
         branch_name: str,
         file_name: str,
-        commit_message: str
+        commit_message: str,
+        is_initial_commit: bool = False
     ) -> None:
         """
         Commit changes to a file and push to a specified branch.
@@ -126,20 +123,32 @@ class GitHubAutomator:
         :param branch_name: Name of the branch to push to.
         :param file_name: Name of the file to commit.
         :param commit_message: Commit message.
+        :param is_initial_commit: Whether this is the initial commit.
         """
         try:
             os.chdir(self.repo_dir)
             repo_local = git.Repo(self.repo_dir)
-            repo_local.git.checkout(branch_name)
-            with open(file_name, 'a') as f:
-                f.write(commit_message + '\n')
-            repo_local.git.add(file_name)
-            repo_local.git.commit('-m', commit_message)
-            repo_local.git.push('--set-upstream', 'origin', branch_name)
-            self.logger.info(f'Changes pushed to {branch_name} successfully.')
+
+            if is_initial_commit:
+                repo_local.git.add(file_name)
+                repo_local.git.commit('-m', commit_message)
+                repo_local.git.branch('-M', branch_name)
+                repo_local.git.remote('add', 'origin', self.repo.clone_url)
+                repo_local.git.push('-u', 'origin', branch_name)
+                self.logger.info('Initial commit pushed to main branch.')
+            else:
+                repo_local.git.checkout(branch_name)
+                with open(file_name, 'a') as f:
+                    f.write(commit_message + '\n')
+                repo_local.git.add(file_name)
+                repo_local.git.commit('-m', commit_message)
+                repo_local.git.push('--set-upstream', 'origin', branch_name)
+                self.logger.info(
+                    f'Changes pushed to {branch_name} successfully.'
+                )
         except Exception as e:
             self.logger.error(
-                f'Failed to push changes to {branch_name}. Error: {e}'
+                f'Failed to push changes. Error: {e}'
             )
 
     def create_and_merge_pull_request(
