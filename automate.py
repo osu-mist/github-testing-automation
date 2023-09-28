@@ -11,8 +11,14 @@ import yaml
 class GitHubAutomator:
     """A class to automate the Testing of Staging GitHub operations."""
 
-    def __init__(self, access_token: str, base_url: str, username: str,
-                 repo_name: str, repo_dir: str):
+    def __init__(
+            self,
+            access_token: str,
+            base_url: str,
+            username: str,
+            repo_name: str,
+            repo_dir: str
+    ) -> None:
         """
         Initialize the GitHubAutomator class.
 
